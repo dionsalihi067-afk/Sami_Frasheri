@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces */
+  --color-ivory: #f5f1e8;
+  --color-paper: #fbf9f4;
+  --color-sand: #ece6da;
+  --color-stone: #d8cfbf;
+  --color-charcoal: #1c1b1a;
+  --color-charcoal-2: #262422;
+
+  /* Text */
+  --color-graphite: #262422;
+  --color-muted: #675f55;
+  --color-on-dark: #f1ece2;
+  --color-on-dark-muted: #aaa298;
+
+  /* Lines */
+  --color-line: rgb(38 36 34 / 0.12);
+  --color-line-strong: rgb(38 36 34 / 0.22);
+  --color-line-dark: rgb(241 236 226 / 0.14);
+
+  /* Accents: institutional red used sparingly, brass for small details */
+  --color-red: #9b1c23;
+  --color-red-deep: #7d151b;
+  --color-brass: #94754a;
+
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --header-h: 4rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  color-scheme: light;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 4.75rem;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 4rem);
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-graphite);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-red);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- Layout ---------- */
+@utility container-x {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section {
+  padding-block: clamp(4.5rem, 12vw, 9rem);
+}
+
+@utility surface-dark {
+  background: var(--color-charcoal);
+  color: var(--color-on-dark);
+}
+
+/* Faint architectural column grid used behind page headers. */
+@utility grid-lines {
+  background-image: linear-gradient(to right, var(--color-line) 1px, transparent 1px);
+  background-size: calc((100% - 2 * var(--gutter)) / 4) 100%;
+  background-position: var(--gutter) 0;
+  @media (min-width: 1024px) {
+    background-size: calc((min(100%, 84rem) - 2 * var(--gutter)) / 12) 100%;
+  }
+}
+
+/* ---------- Typography ---------- */
+@utility t-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@utility t-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(3rem, 13vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+
+@utility t-h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 9vw, 5.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+@utility t-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.125rem, 6vw, 3.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+@utility t-h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.2vw, 2.125rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+@utility t-lead {
+  font-size: clamp(1.0625rem, 2.3vw, 1.3125rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+@utility t-body {
+  font-size: 1rem;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+/* ---------- Buttons ---------- */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 3rem;
+  padding-inline: 1.5rem;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms var(--ease-out-expo);
+  &:active {
+    transform: scale(0.98);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+@utility btn-primary {
+  background: var(--color-red);
+  color: #fff;
+  &:hover {
+    background: var(--color-red-deep);
+  }
+}
+
+@utility btn-dark {
+  background: var(--color-graphite);
+  color: var(--color-paper);
+  &:hover {
+    background: #000;
+  }
+}
+
+@utility btn-outline {
+  border: 1px solid var(--color-line-strong);
+  &:hover {
+    border-color: currentColor;
+    background: rgb(38 36 34 / 0.04);
+  }
+}
+
+@utility btn-outline-light {
+  border: 1px solid var(--color-line-dark);
+  color: var(--color-on-dark);
+  &:hover {
+    border-color: var(--color-on-dark);
+    background: rgb(241 236 226 / 0.06);
+  }
+}
+
+@utility link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 300ms var(--ease-out-expo);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------- Motion (CSS only, progressive) ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter {
+    animation: fade 400ms ease both;
+  }
+
+  .hero-in > * {
+    animation: rise 900ms var(--ease-out-expo) both;
+  }
+  .hero-in > :nth-child(2) {
+    animation-delay: 70ms;
+  }
+  .hero-in > :nth-child(3) {
+    animation-delay: 140ms;
+  }
+  .hero-in > :nth-child(4) {
+    animation-delay: 210ms;
+  }
+  .hero-in > :nth-child(5) {
+    animation-delay: 280ms;
+  }
+
+  .draw-in path {
+    stroke-dasharray: 1;
+    animation: draw 2.4s var(--ease-out-expo) both;
+  }
+  .draw-in path:nth-child(2) {
+    animation-delay: 150ms;
+  }
+  .draw-in path:nth-child(3) {
+    animation-delay: 300ms;
+  }
+  .draw-in path:nth-child(4) {
+    animation-delay: 700ms;
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+  }
+}
